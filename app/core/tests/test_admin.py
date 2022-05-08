@@ -47,3 +47,14 @@ class AdminSiteTests(TestCase):
         self.assertEqual(res.status_code, 200)
 
         self.cmd.stdout.write(self.cmd.style.SUCCESS('OK!')) 
+
+    def test_create_user_page(self):
+        # Test that the create user page works
+        self.cmd.stdout.write(f'--------Test {self.cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
+
+        url = reverse('admin:core_user_add')
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+        
+        self.cmd.stdout.write(self.cmd.style.SUCCESS('OK!'))
