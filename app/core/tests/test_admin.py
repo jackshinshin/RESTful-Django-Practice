@@ -35,3 +35,15 @@ class AdminSiteTests(TestCase):
 
         self.cmd.stdout.write(self.cmd.style.SUCCESS('OK!'))
         
+    def test_user_change_page(self):
+        # Test that the user edit page works
+        
+        self.cmd.stdout.write(f'--------Test {self.cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
+        
+        # admin/core/user/1
+        url = reverse('admin:core_user_change', args = [self.user.id])
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+
+        self.cmd.stdout.write(self.cmd.style.SUCCESS('OK!')) 
