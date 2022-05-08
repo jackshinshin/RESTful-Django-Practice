@@ -17,7 +17,18 @@ class ModelTests(TestCase):
         self.assertEqual(user.email, email)
         # because password is encrypted, it can only be checked in this way
         self.assertTrue(user.check_password(password))
-
+        cmd.stdout.write(cmd.style.SUCCESS('OK!'))
+        
+    def test_normalize_email(self):
+        cmd = BaseCommand()
+        cmd.stdout.write(f'--------Test {cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
+        email = "fsadnomif@FASGFASDFAD"
+        user = get_user_model().objects.create_user(
+            email,
+            'randomcharacters'
+        )
+        self.assertEqual(user.email, email.lower())
+        cmd.stdout.write(cmd.style.SUCCESS('OK!'))
     def test_create_superuser(self):
         cmd = BaseCommand()
         cmd.stdout.write(f'--------Test {cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
@@ -28,3 +39,4 @@ class ModelTests(TestCase):
         # is_superuser is included in the permissionmixin
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
+        cmd.stdout.write(cmd.style.SUCCESS('OK!'))
