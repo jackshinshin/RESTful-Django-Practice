@@ -10,7 +10,6 @@ class CommandTests(TestCase):
     def setUp(self) -> None:
         self.cmd = BaseCommand()
     def test_wait_for_db_ready(self):
-        
         self.cmd.stdout.write(f'--------Test {self.cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
         # Test waiting for db when db is available
         with patch('django.db.utils.ConnectionHandler.__getitem__') as getitem:
@@ -24,11 +23,11 @@ class CommandTests(TestCase):
     @patch('time.sleep', return_value = True)# When using patch as a decorator, an argument is needed
     def test_wait_for_db(self, required_arg):
         
-        
         self.cmd.stdout.write(f'--------Test {self.cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
         # Test waiting for db
         with patch('django.db.utils.ConnectionHandler.__getitem__') as getitem:
             getitem.side_effect = [OperationalError] * 5 + [True]
             call_command('wait_for_db')
             self.assertEqual(getitem.call_count, 6)
+            
         self.cmd.stdout.write(self.cmd.style.SUCCESS('OK!'))

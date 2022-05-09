@@ -26,6 +26,7 @@ class ModelTests(TestCase):
     def test_normalize_email(self):
         
         self.cmd.stdout.write(f'--------Test {self.cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
+        
         email = "fsadnomif@FASGFASDFAD"
         user = get_user_model().objects.create_user(
             email,
@@ -36,16 +37,16 @@ class ModelTests(TestCase):
         self.cmd.stdout.write(self.cmd.style.SUCCESS('OK!'))
 
     def test_new_user_invalid_email(self):
-        cmd = BaseCommand()
-        cmd.stdout.write(f'--------Test {cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
+        self.cmd.stdout.write(f'--------Test {self.cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
+        
+        
         with self.assertRaises(ValueError):
             get_user_model().objects.create_user(None, "tasdfds")
             
-        cmd.stdout.write(cmd.style.SUCCESS('OK!'))
+        self.cmd.stdout.write(self.cmd.style.SUCCESS('OK!'))
         
     def test_create_superuser(self):
-        cmd = BaseCommand()
-        cmd.stdout.write(f'--------Test {cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
+        self.cmd.stdout.write(f'--------Test {self.cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
         user = get_user_model().objects.create_superuser(
             'test@gmail.com',
             'test123'
@@ -54,4 +55,4 @@ class ModelTests(TestCase):
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
         
-        cmd.stdout.write(cmd.style.SUCCESS('OK!'))
+        self.cmd.stdout.write(self.cmd.style.SUCCESS('OK!'))
