@@ -1,7 +1,7 @@
-from ast import Try
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
-                                        PermissionsMixin
+    PermissionsMixin
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -13,14 +13,16 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
 
         return user
-    
+
     def create_superuser(self, email, password):
         user = self.create_user(email, password)
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
-        
+
         return user
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     # Custom user moddel that supports using email rather than a username
     email = models.EmailField(max_length=200, unique=True)

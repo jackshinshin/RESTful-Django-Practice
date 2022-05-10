@@ -4,13 +4,14 @@ from rest_framework.settings import api_settings
 
 from user.serializers import UserSerializer, TokenSerializer
 
+
 class CreateUserView(generics.CreateAPIView):
     # Create a new user on the browser
     serializer_class = UserSerializer
+
 
 class CreateTokenView(ObtainAuthToken):
     # Create a new auth token for user
     serializer_class = TokenSerializer
     # Define a renderer function for viewing what happened in tha backend through the browser
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
-    

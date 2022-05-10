@@ -6,7 +6,9 @@ from django.contrib.auth.admin import UserAdmin as BaseUA
 from django.utils.translation import gettext
 from core import models
 
+
 class UserAdmin(BaseUA):
+
     ordering = ['id']
     list_display = ['email', 'name']
     # To group fields into different sections
@@ -15,30 +17,31 @@ class UserAdmin(BaseUA):
     (section_name, {
         ("fields":(field1, field2, etc...)
     })
-   """ 
+    """
     fieldsets = (
         (None, {
             "fields": (
-                'email', 'password'                
+                'email', 'password'
             )
         }),
-        (gettext('Personal Info'), {'fields':('name',)}),
+        (gettext('Personal Info'), {'fields': ('name',)}),
         (
             gettext('Permissions'),
             {
-                'fields':(
+                'fields': (
                     'is_staff', 'is_superuser'
                 )
             }
         ),
-        (gettext('Important Dates'), {'fields':('last_login', )})
+        (gettext('Important Dates'), {'fields': ('last_login', )})
     )
-    
+
     add_fieldsets = (
         (None, {
-            'classes':('wide', ),
-            'fields' :('email', 'password1', 'password2')
+            'classes': ('wide', ),
+            'fields': ('email', 'password1', 'password2')
         }),
     )
-    
+
+
 admin.site.register(models.User, UserAdmin)

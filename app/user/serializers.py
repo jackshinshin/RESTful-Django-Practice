@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
 
+
 class UserSerializer(serializers.ModelSerializer):
     # Serializer for the users object
     class Meta:
@@ -11,9 +12,10 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('email', 'password', 'name')
         # Ensure the password is write-only, and the number of it should be above 5
         extra_kwargs = {
-            'password' : {'write_only' : True, 'min_length' : 5},
-        } 
+            'password': {'write_only': True, 'min_length': 5},
+        }
     # This function will be called when django rest framework tries to create a user, passing validated data
+
     def create(self, validated_data):
         # Overriden create function to create a new user with encrypted password and return it
         return get_user_model().objects.create_user(**validated_data)
@@ -23,14 +25,15 @@ class TokenSerializer(serializers.Serializer):
     # Serializer for the user authentication object
     email = serializers.CharField()
     password = serializers.CharField(
-        style = {'input_type' : 'password'},
-        trim_whitespace = False
+        style={'input_type': 'password'},
+        trim_whitespace=False
     )
     """
-    Validation :    
+    Validation :
     1. input type
     2. authentication credentials
     """
+
     def validate(self, attrs):
         # Validate and authenticate the user
         # attrs : contains any field that makes up the above serializer
@@ -39,14 +42,14 @@ class TokenSerializer(serializers.Serializer):
 
         # When a request is made, the context variable is sent to the serializer
         user = authenticate(
-            request = self.context.get('request'),
-            username = email,
-            password = password
+            request=self.context.get('request'),
+            username=email,
+            password=password
         )
         # authentication fails
         if not user:
             msg = _('Unable to authenticate with provided credentials')
-            raise serializers.ValidationError(msg, code = 'authentication')
+            raise serializers.ValidationError(msg, code='authentication')
 
         attrs['user'] = user
         # Overriding the validate function requires returning "attrs" once the validation is successful
