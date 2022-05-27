@@ -200,8 +200,7 @@ class PrivateUserAPITest(TestCase):
     def test_update_user_profile(self):
         # Test updating th euser profile for authenticated user
 
-        self.cmd.stdout.write(
-            f'--------Test {self.cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
+        self.cmd.stdout.write(f'--------Test {self.cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
 
         payload = {
             'name': 'newone',
