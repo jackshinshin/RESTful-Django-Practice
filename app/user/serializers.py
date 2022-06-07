@@ -7,8 +7,10 @@ from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
     # Serializer for the users object
+    # ModelSerializer helps save validated data to the self-defined model
     class Meta:
         model = get_user_model()
+        # fields contain what a user can change via the api
         fields = ('email', 'password', 'name')
         # Ensure the password is write-only, and the number of it should be above 5
         extra_kwargs = {
@@ -17,7 +19,9 @@ class UserSerializer(serializers.ModelSerializer):
     # This function will be called when django rest framework tries to create a user, passing validated data
 
     def create(self, validated_data):
+        # This function gets called when the validation is successful
         # Overriden create function to create a new user with encrypted password and return it
+        # The following function is defined in models.py in 'core' module
         return get_user_model().objects.create_user(**validated_data)
 
 
