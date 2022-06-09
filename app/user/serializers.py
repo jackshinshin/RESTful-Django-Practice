@@ -24,6 +24,19 @@ class UserSerializer(serializers.ModelSerializer):
         # The following function is defined in models.py in 'core' module
         return get_user_model().objects.create_user(**validated_data)
 
+    def update(self, instance, validated_data):
+        # The method is called whenever a user conduct the update action on the model this serializer represents
+
+        # Retrieve the password and remove it from the database
+        # None parameter means that the user doesn't have to provide something to update the info
+        password = validated_data.pop('password', None)
+        user = super().update(instance, validated_data)
+
+        if password:
+            user.set_password(password)
+            user.save()
+
+        return user
 
 class TokenSerializer(serializers.Serializer):
     # Serializer for the user authentication object

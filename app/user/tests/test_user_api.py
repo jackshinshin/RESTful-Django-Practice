@@ -10,7 +10,7 @@ from rest_framework import status
 
 CREATE_USER_URL = reverse('user:create')
 TOKEN_URL = reverse('user:token')
-CURRENT_USER_URL = reverse('user:me')
+CURRENT_USER_URL = reverse('user:currentuser')
 
 # Helper function that can be used for different tests
 
