@@ -87,11 +87,18 @@ class PublicUserAPITests(TestCase):
         self.cmd.stdout.write(
             f'--------Test {self.cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
 
-        payload = {
+        user_info = {
+            'name': 'Test',
             'email': 'test@gmail.com',
             'password': 'test123'
         }
-        create_user(**payload)
+        create_user(**user_info)
+        
+        payload = {
+            'email': user_info['email'],
+            'password': user_info['password']
+        }
+        
         res = self.client.post(TOKEN_URL, payload)
 
         self.assertIn('token', res.data)
