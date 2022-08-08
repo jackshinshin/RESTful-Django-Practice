@@ -1,3 +1,7 @@
+from decimal import Decimal
+from sys import stdout
+from core import models
+
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 import inspect
@@ -61,3 +65,23 @@ class ModelTests(TestCase):
         self.assertTrue(user.is_staff)
 
         self.cmd.stdout.write(self.cmd.style.SUCCESS('OK!'))
+
+    def test_create_recipe(self):
+        # Test creating a recipe is successful
+        self.cmd.stdout.write(f'--------Test {self.cmd.style.WARNING(inspect.currentframe().f_code.co_name)} begins--------')
+        
+        user = get_user_model().objects.create_user(
+            'test@example.com',
+            'testpass11'
+        )
+        recipe = models.Recipe.objects.create(
+            user=user,
+            title='Sample Recipe',
+            price=Decimal('1.5'),
+            description='Sample recipe description'
+        )
+
+        self.assertEqual(str(recipe), recipe.title)
+        
+        self.cmd.stdout.write(self.cmd.style.SUCCESS('OK!'))
+        
